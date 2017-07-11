@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 
+import bb.carddeck.model.CardList;
+import bb.carddeck.model.Deck;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,6 +51,12 @@ public class API {
     }
     public interface APIInterface {
 
+        @FormUrlEncoded
+        @GET("api/deck/new/shuffle/")
+        Call<Deck> GetShuffledDeck(@Field("deck_count") Integer number);
 
+        @FormUrlEncoded
+        @GET("api/deck/{deck_id}/draw/")
+        Call<CardList> GetCards(@Path(value ="deck_id") String deck_id, @Field("count") Integer number);
     }
 }

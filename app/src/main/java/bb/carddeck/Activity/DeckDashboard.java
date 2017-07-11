@@ -1,13 +1,15 @@
-package bb.carddeck;
+package bb.carddeck.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import bb.carddeck.R;
+
+public class DeckDashboard extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_deck_dashboard);
     }
 }

@@ -1,6 +1,8 @@
 package bb.carddeck.Activity;
 
 import android.app.ListActivity;
+import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,18 +36,22 @@ public class DeckDashboard extends ListActivity{
         setContentView(R.layout.activity_deck_dashboard);
         ButterKnife.bind(this);
 
-        NumOfDecks.setText("5");
+        Intent intent = getIntent();
+        Integer numberOfDecks = intent.getIntExtra("numberOfDecks", 1);
+
+        NumOfDecks.setText(numberOfDecks.toString());
 
         //Populate cardList.
-        deck = Query.GetDeck(5); //TODO No internet handle deck = null
+        deck = Query.GetDeck(numberOfDecks); //TODO No internet handle deck = null
         cardList =  Query.GetCards(deck.getDeck_id(), 5);
+        NumOfRemCards.setText(cardList.getRemaining().toString());
 
 
         reshuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardList =  Query.GetCards(deck.getDeck_id(), 5);
-                //NumOfRemCards.setText(cardList.getRemaining().toString());
+                NumOfRemCards.setText(cardList.getRemaining().toString());
                 adapter.refreshData(cardList.getCardList());
             }
         });

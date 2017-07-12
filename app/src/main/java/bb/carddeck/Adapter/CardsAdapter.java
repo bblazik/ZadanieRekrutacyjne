@@ -5,6 +5,7 @@ package bb.carddeck.Adapter;
  */
 
 import android.app.Activity;
+import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +16,14 @@ import android.widget.TextView;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import bb.carddeck.R;
 import bb.carddeck.model.Card;
 
 public class CardsAdapter extends ArrayAdapter<Card> {
-    private final List<Card> list;
+    private List<Card> list;
     private final Activity context;
 
     static class ViewHolder {
@@ -35,7 +37,7 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         this.list = list;
     }
 
-    public void refreshData(List<Card> cards) { //TODO check if there is a better way
+    public void refreshData(List<Card> cards) { //TODO check if there is a better way Observer?
         list.clear();
         list.addAll(cards);
         notifyDataSetChanged();

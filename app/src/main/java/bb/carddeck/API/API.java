@@ -61,5 +61,8 @@ public class API {
 
         @GET("api/deck/{deck_id}/draw/")
         Call<ResponseBody> GetCardsT(@Path(value ="deck_id") String deck_id, @Query("count") Integer number);
+
+        @GET("api/deck{deck_id}/shuffle")
+        Call<CardList> GetShuffle(@Path(value = "deck_id") String deck_id);
     }
 }

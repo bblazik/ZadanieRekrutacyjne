@@ -42,6 +42,18 @@ public class Query {
         return null;
     }
 
+    public static CardList GetShuffle(String deck_id){
+        CardList newCardList = null;
+        Call<CardList> query = apiInterface.GetShuffle(deck_id);
+        try {
+            newCardList = query.execute().body();
+            return newCardList != null ? newCardList :null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void GetCardsAsync (String deck_id, Integer numberOfCards){
 
         Call<CardList> query = apiInterface.GetCards(deck_id, numberOfCards);

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), DeckDashboard.class);
-                intent.putExtra("numberOfDecks", 5);
+                intent.putExtra("numberOfDecks", 1);
                 startActivity(intent);
             }
         });

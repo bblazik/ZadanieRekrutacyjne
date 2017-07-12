@@ -42,12 +42,12 @@ public class Query {
         return null;
     }
 
-    public static CardList GetShuffle(String deck_id){
-        CardList newCardList = null;
-        Call<CardList> query = apiInterface.GetShuffle(deck_id);
+    public static Deck GetShuffle(String deck_id){
+        Deck newDeck = null;
+        Call<Deck> query = apiInterface.GetShuffle(deck_id);
         try {
-            newCardList = query.execute().body();
-            return newCardList != null ? newCardList :null;
+            newDeck = query.execute().body();
+            return newDeck != null ? newDeck:null;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -50,6 +50,10 @@ public class DeckDashboard extends ListActivity{
         reshuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(cardList.getRemaining().equals(0)){
+                    deck = Query.GetShuffle(deck.getDeck_id());
+                }
+
                 cardList =  Query.GetCards(deck.getDeck_id(), 5);
                 NumOfRemCards.setText(cardList.getRemaining().toString());
                 adapter.refreshData(cardList.getCardList());

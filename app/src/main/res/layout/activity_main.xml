@@ -10,7 +10,7 @@
 
 
     <Button
-        android:id="@+id/Next"
+        android:id="@+id/PickNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,7 +21,7 @@
         android:id="@+id/numberPicker2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/Next"
+        android:layout_above="@+id/PickNumber"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical|center_horizontal" />
 

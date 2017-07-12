@@ -6,34 +6,69 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by barte_000 on 11.07.2017.
  */
 
 public class Card {
-    Drawable image;
-
+    @SerializedName("suit")
+    String suit;
+    @SerializedName("images")
+    Images img;
     @SerializedName("image")
     String imageUrl;
-    String value;
-    String suit;
+    @SerializedName("code")
     String code;
+    @SerializedName("value")
+    String value;
 
-    public Card(String imageUrl, String value, String suit, String code) {
-        this.image = LoadImageFromWebOperations(imageUrl);
+    public Card(String imageUrl, String value, String suit, String code, Images img) {
+        this.imageUrl = imageUrl;
         this.value = value;
         this.suit = suit;
         this.code = code;
+        this.img = img;
     }
 
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getSuit() {
+        return suit;
+    }
+
+    public void setSuit(String suit) {
+        this.suit = suit;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Images getImg() {
+        return img;
+    }
+
+    public void setImg(Images img) {
+        this.img = img;
     }
 }

@@ -5,7 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
+import bb.carddeck.model.Card;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
 import okhttp3.Interceptor;
@@ -22,7 +24,7 @@ import retrofit2.http.Query;
 public class API {
 
     private static APIInterface apiInterface;
-    private static String url = "http://deckofcardsapi.com/";
+    private static String url = "https://deckofcardsapi.com/";
     public static APIInterface getClient() {
         if (apiInterface == null) {
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -51,12 +53,13 @@ public class API {
     }
     public interface APIInterface {
 
-        @FormUrlEncoded
         @GET("api/deck/new/shuffle/")
-        Call<Deck> GetShuffledDeck(@Field("deck_count") Integer number);
+        Call<Deck> GetShuffledDeck( @Query("deck_count") Integer number);
 
-        @FormUrlEncoded
         @GET("api/deck/{deck_id}/draw/")
-        Call<CardList> GetCards(@Path(value ="deck_id") String deck_id, @Field("count") Integer number);
+        Call<CardList> GetCards(@Path(value ="deck_id") String deck_id, @Query("count") Integer number);
+
+        @GET("api/deck/{deck_id}/draw/")
+        Call<ResponseBody> GetCardsT(@Path(value ="deck_id") String deck_id, @Query("count") Integer number);
     }
 }

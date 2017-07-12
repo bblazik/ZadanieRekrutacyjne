@@ -1,7 +1,5 @@
 package bb.carddeck.API;
 
-import android.util.Log;
-
 import java.io.IOException;
 
 import bb.carddeck.model.CardList;
@@ -16,6 +14,7 @@ import retrofit2.Response;
 
 public class Query {
     static API.APIInterface apiInterface = API.getClient();
+    static CardList newCardList;
 
     public static Deck GetDeck(Integer numberOfDecks){
 
@@ -41,5 +40,21 @@ public class Query {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void GetCardsAsync (String deck_id, Integer numberOfCards){
+
+        Call<CardList> query = apiInterface.GetCards(deck_id, numberOfCards);
+        query.enqueue(new Callback<CardList>() {
+            @Override
+            public void onResponse(Call<CardList> call, Response<CardList> response) {
+                newCardList = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<CardList> call, Throwable t) {
+            String s = t.toString();
+            }
+        });
     }
 }

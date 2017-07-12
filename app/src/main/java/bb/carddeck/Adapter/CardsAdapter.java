@@ -35,6 +35,12 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         this.list = list;
     }
 
+    public void refreshData(List<Card> cards) { //TODO check if there is a better way
+        list.clear();
+        list.addAll(cards);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = null;
@@ -55,6 +61,8 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         holder.cardImg.setImageDrawable(LoadImageFromWebOperations(list.get(position).getImageUrl()));
         return view;
     }
+
+
 
     public static Drawable LoadImageFromWebOperations(String url) {
         try {

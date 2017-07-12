@@ -5,4 +5,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="PickNumber">Pick number of decs</string>
+    <string name="remaining">Remaining cards: </string>
+    <string name="decks">Number of decks: </string>
+    <string name="ReshuffleButton">Reshuffle</string>
 </resources>

@@ -2,7 +2,6 @@ package bb.carddeck.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -20,20 +19,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        int s = numberPicker.getValue();
-        String k = "h";
+
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(5);
+        numberPicker.setWrapSelectorWheel(true);
+
         pickNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), DeckDashboard.class);
-                intent.putExtra("numberOfDecks", 1);
+                intent.putExtra("numberOfDecks", numberPicker.getValue());
                 startActivity(intent);
             }
         });

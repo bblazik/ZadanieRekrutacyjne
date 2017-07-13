@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,6 +36,9 @@ public class DeckDashboard extends ListActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deck_dashboard);
         ButterKnife.bind(this);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         Intent intent = getIntent();
         Integer numberOfDecks = intent.getIntExtra("numberOfDecks", 1);

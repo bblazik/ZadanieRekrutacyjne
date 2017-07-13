@@ -23,7 +23,7 @@ import bb.carddeck.R;
 import bb.carddeck.model.Card;
 
 public class CardsAdapter extends ArrayAdapter<Card> {
-    private List<Card> list;
+    private final List<Card> list;
     private final Activity context;
 
     static class ViewHolder {
@@ -38,7 +38,8 @@ public class CardsAdapter extends ArrayAdapter<Card> {
     }
 
     public void refreshData(List<Card> cards) { //TODO check if there is a better way Observer?
-        list = cards;
+        list.clear();
+        list.addAll(cards);
         notifyDataSetChanged();
     }
 
@@ -62,8 +63,6 @@ public class CardsAdapter extends ArrayAdapter<Card> {
         holder.cardImg.setImageDrawable(LoadImageFromWebOperations(list.get(position).getImageUrl()));
         return view;
     }
-
-
 
     public static Drawable LoadImageFromWebOperations(String url) {
         try {

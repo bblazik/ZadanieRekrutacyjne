@@ -98,14 +98,12 @@ public class DeckDashboard extends ListActivity{
             if(deck == null){
                 PopulateAdapter();
             }else{
+                if(cardList.getRemaining().equals(0)){
+                    deck = Query.GetShuffle(deck.getDeck_id());
+                }
                 cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
+                adapter.refreshData(cardList.getCardList());
             }
-
-            if(cardList.getRemaining().equals(0)){
-                deck = Query.GetShuffle(deck.getDeck_id());
-            }
-
-            adapter.refreshData(cardList.getCardList());
             setTextViews();
         }
     };

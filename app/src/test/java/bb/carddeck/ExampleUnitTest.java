@@ -41,6 +41,5 @@ public class ExampleUnitTest {
         assert(cl != null);
         assertEquals(cards.get(0).getCode(),"4S");
         assertEquals(cards.get(0).getImg().getPng(), "http://deckofcardsapi.com/static/img/4S.png");
-
     }
 }

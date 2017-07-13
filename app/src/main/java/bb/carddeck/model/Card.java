@@ -1,6 +1,7 @@
 package bb.carddeck.model;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,11 +9,13 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 
+import bb.carddeck.Logic.Composition;
+
 /**
  * Created by barte_000 on 11.07.2017.
  */
 
-public class Card {
+public class Card{
     @SerializedName("suit")
     String suit;
     @SerializedName("images")
@@ -30,6 +33,10 @@ public class Card {
         this.suit = suit;
         this.code = code;
         this.img = img;
+    }
+
+    public Card(String code) {
+        this.code = code;
     }
 
     public String getImageUrl() {
@@ -71,4 +78,5 @@ public class Card {
     public void setImg(Images img) {
         this.img = img;
     }
+
 }

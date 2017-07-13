@@ -54,7 +54,6 @@ public class DeckDashboard extends ListActivity{
         internetState = new InternetState(getBaseContext());
         if(!internetState.isOnline()) return;
 
-        //Populate cardList.
         PopulateAdapter();
         setTextViews();
     }
@@ -99,7 +98,7 @@ public class DeckDashboard extends ListActivity{
             if(deck == null){
                 PopulateAdapter();
             }else{
-                cardList =  Query.GetCards(deck.getDeck_id(), NumberOfCards);
+                cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
             }
 
             if(cardList.getRemaining().equals(0)){

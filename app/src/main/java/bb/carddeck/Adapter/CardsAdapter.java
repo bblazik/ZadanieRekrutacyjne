@@ -38,8 +38,7 @@ public class CardsAdapter extends ArrayAdapter<Card> {
     }
 
     public void refreshData(List<Card> cards) { //TODO check if there is a better way Observer?
-        list.clear();
-        list.addAll(cards);
+        list = cards;
         notifyDataSetChanged();
     }
 

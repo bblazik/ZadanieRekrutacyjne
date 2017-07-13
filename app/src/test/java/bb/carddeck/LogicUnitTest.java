@@ -118,4 +118,21 @@ public class LogicUnitTest {
         c.add(new Card("9D"));
         assertFalse(Composition.ContainsStairs(c));
     }
+
+    @Test
+    public void IsSorted() throws Exception {
+        List<Card> c = new ArrayList<>();
+        c.add(new Card("JC"));
+        c.add(new Card("QC"));
+        c.add(new Card("KH"));
+        c.add(new Card("AD"));
+        c.add(new Card("8C"));
+
+        Composition.SortCards(c);
+        assertEquals(c.get(0).getCode(), "AD");
+        assertEquals(c.get(1).getCode(), "8C");
+        assertEquals(c.get(2).getCode(), "JC");
+        assertEquals(c.get(3).getCode(), "QC");
+        assertEquals(c.get(4).getCode(), "KH");
+    }
 }

@@ -31,13 +31,7 @@ public abstract class Composition {
     public static Boolean ContainsStairs(List<Card> ls){
         int series = 1;
 
-        Collections.sort(ls, new Comparator<Card>() {
-            @Override
-            public int compare(Card o1, Card o2) {
-                return Composition.GetCardRank(o1) - Composition.GetCardRank(o2);
-            }
-        });
-
+        SortCards(ls);
         for(int i = 0; i<ls.size()-1; i++){
             if(Math.abs(GetCardRank(ls.get(i)) - GetCardRank(ls.get(i+1)))  == 1){
                 series++;
@@ -92,5 +86,14 @@ public abstract class Composition {
             case 'D': return 3;
             default: return 0;
         }
+    }
+
+    public static void SortCards(List<Card> ls){
+        Collections.sort(ls, new Comparator<Card>() {
+            @Override
+            public int compare(Card o1, Card o2) {
+                return Composition.GetCardRank(o1) - Composition.GetCardRank(o2);
+            }
+        });
     }
 }

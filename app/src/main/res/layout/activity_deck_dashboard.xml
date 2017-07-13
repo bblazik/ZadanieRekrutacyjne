@@ -53,8 +53,17 @@ android:descendantFocusability="beforeDescendants">
         android:id="@+id/ReshuffleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/ReshuffleButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/ReshuffleButton" />
+        android:layout_alignEnd="@+id/NumDecks" />
+
+    <TextView
+        android:id="@+id/Composition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Composition"
+        android:layout_alignBaseline="@+id/ReshuffleButton"
+        android:layout_alignBottom="@+id/ReshuffleButton"
+        android:layout_alignEnd="@+id/textView3" />
 
 </RelativeLayout>

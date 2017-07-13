@@ -7,7 +7,10 @@ import java.util.List;
 
 import bb.carddeck.Logic.Composition;
 import bb.carddeck.model.Card;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 /**
  * Created by barte_000 on 13.07.2017.
  */

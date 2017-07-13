@@ -7,5 +7,6 @@
     <string name="PickNumber">Pick number of decs</string>
     <string name="remaining">Remaining cards: </string>
     <string name="decks">Number of decks: </string>
-    <string name="ReshuffleButton">Reshuffle</string>
+    <string name="ReshuffleButton">Redraw</string>
+    <string name="Composition">Unfortunately nothing matches </string>
 </resources>

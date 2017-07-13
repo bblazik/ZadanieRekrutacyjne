@@ -12,7 +12,7 @@ import bb.carddeck.model.CardList;
  * Created by barte_000 on 13.07.2017.
  */
 
-public abstract class Composition {
+public class Composition {
 
     public static Boolean ContainsColor(List<Card> ls){
         int[] colors = new int[4];
@@ -65,6 +65,8 @@ public abstract class Composition {
         }
         return false;
     }
+
+    // \/Those methods can be implemented in Card class\/
 
     public static int GetCardRank(Card c){
         switch (c.getCode().charAt(0)){

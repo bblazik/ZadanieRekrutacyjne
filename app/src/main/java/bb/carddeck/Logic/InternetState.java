@@ -21,7 +21,7 @@ public class InternetState {
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         Boolean state = netInfo != null && netInfo.isConnectedOrConnecting();
-        if(state){
+        if(!state){
             Toast.makeText(mContext, "Please enable you internet connection", Toast.LENGTH_LONG).show();
         }
         return state;

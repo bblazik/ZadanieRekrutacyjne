@@ -38,7 +38,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(Composition.IsColor(c));
+        assertTrue(Composition.ContainsColor(c));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertFalse(Composition.IsColor(c));
+        assertFalse(Composition.ContainsColor(c));
     }
 
     @Test

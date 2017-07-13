@@ -12,13 +12,9 @@ import bb.carddeck.model.CardList;
  * Created by barte_000 on 13.07.2017.
  */
 
-public class Composition {
-    CardList cardList;
-    public Composition(CardList cardList) {
-        this.cardList = cardList;
-    }
+public abstract class Composition {
 
-    public static Boolean IsColor(List<Card> ls){
+    public static Boolean ContainsColor(List<Card> ls){
         int[] colors = new int[4];
 
         for (Card c: ls) {
@@ -34,7 +30,7 @@ public class Composition {
 
     public static Boolean ContainsStairs(List<Card> ls){
         int series = 1;
-        
+
         Collections.sort(ls, new Comparator<Card>() {
             @Override
             public int compare(Card o1, Card o2) {

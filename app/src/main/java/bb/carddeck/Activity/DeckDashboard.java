@@ -7,12 +7,14 @@ import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import bb.carddeck.API.Query;
 import bb.carddeck.Adapter.CardsAdapter;
 import bb.carddeck.Logic.Composition;
+import bb.carddeck.Logic.InternetState;
 import bb.carddeck.R;
 import bb.carddeck.model.Card;
 import bb.carddeck.model.CardList;
@@ -31,6 +33,8 @@ public class DeckDashboard extends ListActivity{
     CardList cardList ;
     Deck deck;
     final int NumberOfCards = 5;
+    InternetState internetState;
+    Integer numberOfDecks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +46,53 @@ public class DeckDashboard extends ListActivity{
         StrictMode.setThreadPolicy(policy);
 
         Intent intent = getIntent();
-        Integer numberOfDecks = intent.getIntExtra("numberOfDecks", 1);
+        numberOfDecks = intent.getIntExtra("numberOfDecks", 1);
         NumOfDecks.setText(numberOfDecks.toString());
-
-        //Populate cardList.
-        deck = Query.GetDeck(numberOfDecks); //TODO No internet handle deck = null
-        cardList =  Query.GetCards(deck.getDeck_id(), NumberOfCards);
-        NumOfRemCards.setText(cardList.getRemaining().toString());
-        composition.setText(communicate(cardList.getCardList()));
-
-        adapter = new CardsAdapter(this, cardList.getCardList());
-        setListAdapter(adapter);
 
         reshuffleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!internetState.isOnline()) {
+                    Toast.makeText(getBaseContext(), "Please enable you internet connection", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(deck == null){
+                    deck = Query.GetDeck(numberOfDecks);
+                    cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
+                    adapter = new CardsAdapter(DeckDashboard.this, cardList.getCardList());
+                    setListAdapter(adapter);
+                }
+
                 if(cardList.getRemaining().equals(0)){
                     deck = Query.GetShuffle(deck.getDeck_id());
                 }
+
                 cardList =  Query.GetCards(deck.getDeck_id(), 5);
                 NumOfRemCards.setText(cardList.getRemaining().toString());
                 adapter.refreshData(cardList.getCardList());
                 composition.setText(communicate(cardList.getCardList()));
             }
         });
+
+
+        internetState = new InternetState(getBaseContext());
+        if(!internetState.isOnline()) {
+            Toast.makeText(getBaseContext(), "Please enable you internet connection", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        //Populate cardList.
+        deck = Query.GetDeck(numberOfDecks);
+        cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
+
+        NumOfRemCards.setText(cardList.getRemaining().toString());
+        composition.setText(communicate(cardList.getCardList()));
+
+        adapter = new CardsAdapter(this, cardList.getCardList());
+        setListAdapter(adapter);
+
+
     }
 
     String communicate(List<Card> ls){

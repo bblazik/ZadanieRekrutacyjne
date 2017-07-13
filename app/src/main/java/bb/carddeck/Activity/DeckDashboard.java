@@ -49,50 +49,14 @@ public class DeckDashboard extends ListActivity{
         numberOfDecks = intent.getIntExtra("numberOfDecks", 1);
         NumOfDecks.setText(numberOfDecks.toString());
 
-        reshuffleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!internetState.isOnline()) {
-                    Toast.makeText(getBaseContext(), "Please enable you internet connection", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(deck == null){
-                    deck = Query.GetDeck(numberOfDecks);
-                    cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
-                    adapter = new CardsAdapter(DeckDashboard.this, cardList.getCardList());
-                    setListAdapter(adapter);
-                }
-
-                if(cardList.getRemaining().equals(0)){
-                    deck = Query.GetShuffle(deck.getDeck_id());
-                }
-
-                cardList =  Query.GetCards(deck.getDeck_id(), 5);
-                NumOfRemCards.setText(cardList.getRemaining().toString());
-                adapter.refreshData(cardList.getCardList());
-                composition.setText(communicate(cardList.getCardList()));
-            }
-        });
-
+        reshuffleButton.setOnClickListener(listener);
 
         internetState = new InternetState(getBaseContext());
-        if(!internetState.isOnline()) {
-            Toast.makeText(getBaseContext(), "Please enable you internet connection", Toast.LENGTH_LONG).show();
-            return;
-        }
+        if(!internetState.isOnline()) return;
 
         //Populate cardList.
-        deck = Query.GetDeck(numberOfDecks);
-        cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
-
-        NumOfRemCards.setText(cardList.getRemaining().toString());
-        composition.setText(communicate(cardList.getCardList()));
-
-        adapter = new CardsAdapter(this, cardList.getCardList());
-        setListAdapter(adapter);
-
-
+        PopulateAdapter();
+        setTextViews();
     }
 
     String communicate(List<Card> ls){
@@ -116,4 +80,34 @@ public class DeckDashboard extends ListActivity{
 
         return sb.toString();
     }
+    void PopulateAdapter(){
+        deck = Query.GetDeck(numberOfDecks);
+        cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
+        adapter = new CardsAdapter(DeckDashboard.this, cardList.getCardList());
+        setListAdapter(adapter);
+    }
+    void setTextViews(){
+        NumOfRemCards.setText(cardList.getRemaining().toString());
+        composition.setText(communicate(cardList.getCardList()));
+    }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(!internetState.isOnline()) return;
+
+            if(deck == null){
+                PopulateAdapter();
+            }else{
+                cardList =  Query.GetCards(deck.getDeck_id(), NumberOfCards);
+            }
+
+            if(cardList.getRemaining().equals(0)){
+                deck = Query.GetShuffle(deck.getDeck_id());
+            }
+
+            adapter.refreshData(cardList.getCardList());
+            setTextViews();
+        }
+    };
 }

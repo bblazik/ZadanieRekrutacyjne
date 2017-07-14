@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bb.carddeck.API.Query;
@@ -24,17 +26,19 @@ import butterknife.ButterKnife;
 
 public class DeckDashboard extends ListActivity{
 
-    @BindView(R.id.NumberOfRemainingCards) TextView NumOfRemCards;
+    @BindView(R.id.NumberOfRemainingCards)
+    TextView NumOfRemCards;
     @BindView(R.id.NumDecks) TextView NumOfDecks;
     @BindView(R.id.ReshuffleButton) Button reshuffleButton;
     @BindView(R.id.Composition) TextView composition;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     CardsAdapter adapter;
-    CardList cardList ;
     Deck deck;
     final int NumberOfCards = 5;
     InternetState internetState;
     Integer numberOfDecks;
+    CardList cardList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +58,14 @@ public class DeckDashboard extends ListActivity{
         internetState = new InternetState(getBaseContext());
         if(!internetState.isOnline()) return;
 
+        adapter = new CardsAdapter(DeckDashboard.this, new ArrayList<Card>());
+        setListAdapter(adapter);
+
+        setProgressBarState(true);
         PopulateAdapter();
-        setTextViews();
     }
 
-    String communicate(List<Card> ls){
+    static String communicate(List<Card> ls){
         StringBuilder sb = new StringBuilder();
         Composition c = new Composition();
 
@@ -79,32 +86,43 @@ public class DeckDashboard extends ListActivity{
 
         return sb.toString();
     }
+
     void PopulateAdapter(){
         deck = Query.GetDeck(numberOfDecks);
-        cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
-        adapter = new CardsAdapter(DeckDashboard.this, cardList.getCardList());
-        setListAdapter(adapter);
+        Query.GetCardsAsync(deck.getDeck_id(), NumberOfCards, adapter, DeckDashboard.this);
     }
-    void setTextViews(){
-        NumOfRemCards.setText(cardList.getRemaining().toString());
+
+    public void setTextViews(String remaining, CardList cardList){
+        NumOfRemCards.setText(remaining);
         composition.setText(communicate(cardList.getCardList()));
+    }
+
+    public void setCardList(CardList cardList){
+        this.cardList = cardList;
+    }
+
+    public void setProgressBarState(Boolean barState){
+        if(barState) progressBar.setVisibility(View.VISIBLE);
+        else progressBar.setVisibility(View.GONE);
+    }
+
+    public void checkRemaining(CardList cardList){
+        if(cardList.getRemaining().equals(0)){
+            deck = Query.GetShuffle(deck.getDeck_id());
+        }
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(!internetState.isOnline()) return;
-
+            setProgressBarState(true);
             if(deck == null){
                 PopulateAdapter();
             }else{
-                if(cardList.getRemaining().equals(0)){
-                    deck = Query.GetShuffle(deck.getDeck_id());
-                }
-                cardList = Query.GetCards(deck.getDeck_id(), NumberOfCards);
-                adapter.refreshData(cardList.getCardList());
+                checkRemaining(cardList);
+                Query.GetCardsAsync(deck.getDeck_id(), NumberOfCards, adapter, DeckDashboard.this);
             }
-            setTextViews();
         }
     };
 }

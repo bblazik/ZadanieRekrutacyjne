@@ -1,7 +1,13 @@
 package bb.carddeck.API;
 
+import android.app.Activity;
+import android.content.Context;
+
 import java.io.IOException;
 
+import bb.carddeck.Activity.DeckDashboard;
+import bb.carddeck.Activity.DeckDashboard_ViewBinding;
+import bb.carddeck.Adapter.CardsAdapter;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
 import retrofit2.Call;
@@ -54,13 +60,19 @@ public class Query {
         return null;
     }
 
-    public static void GetCardsAsync (String deck_id, Integer numberOfCards){
+    public static void GetCardsAsync (String deck_id, Integer numberOfCards, final CardsAdapter cardsAdapter, final Activity activity){
 
         Call<CardList> query = apiInterface.GetCards(deck_id, numberOfCards);
         query.enqueue(new Callback<CardList>() {
             @Override
             public void onResponse(Call<CardList> call, Response<CardList> response) {
                 newCardList = response.body();
+                if(response.isSuccessful()){
+                    cardsAdapter.refreshData(newCardList.getCardList());
+                    ((DeckDashboard)activity).setTextViews(newCardList.getRemaining().toString(),newCardList);
+                    ((DeckDashboard)activity).setCardList(newCardList);
+                    ((DeckDashboard)activity).setProgressBarState(false);
+                }
             }
 
             @Override

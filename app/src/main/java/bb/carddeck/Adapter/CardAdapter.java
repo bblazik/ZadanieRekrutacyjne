@@ -22,7 +22,7 @@ public class CardAdapter extends ArrayAdapter<Card> {
     private final List<Card> list;
     private final Activity context;
 
-    static class ViewHolder {
+    class ViewHolder {
         protected TextView name;
         protected ImageView cardImg;
     }
@@ -31,6 +31,12 @@ public class CardAdapter extends ArrayAdapter<Card> {
         super(context, R.layout.card_row, ls);
         this.context = context;
         this.list = ls;
+    }
+
+    public CardAdapter(Activity context){
+        super(context, R.layout.card_row);
+        this.context = context;
+        this.list = new ArrayList<>();
     }
 
     public void setItems(List<Card> cards) { //TODO check if there is a better way Observer?

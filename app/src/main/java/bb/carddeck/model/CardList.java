@@ -1,5 +1,7 @@
 package bb.carddeck.model;
 
+import android.databinding.ObservableField;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -8,21 +10,19 @@ import java.util.List;
  * Created by barte_000 on 11.07.2017.
  */
 
-public class CardList {
+public class CardList{
 
     @SerializedName("deck_id")
-    String deck_id;
+    public String deck_id;
 
     @SerializedName("cards")
-    private List<Card> cardList;
+    public List<Card> cardList;
 
     @SerializedName("success")
-    Boolean success;
+    public Boolean success;
 
     @SerializedName("remaining")
     Integer remaining;
-
-
 
     public String getDeck_id() {
         return deck_id;
@@ -40,14 +40,6 @@ public class CardList {
         this.cardList = cardList;
     }
 
-    public Integer getRemaining() {
-        return remaining;
-    }
-
-    public void setRemaining(Integer remaining) {
-        this.remaining = remaining;
-    }
-
     public Boolean getSuccess() {
         return success;
     }
@@ -56,16 +48,11 @@ public class CardList {
         this.success = success;
     }
 
-    public CardList(String deck_id, List<Card> cardList, Integer remaining) {
-        this.deck_id = deck_id;
-        this.cardList = cardList;
-        this.remaining = remaining;
+    public Integer getRemaining() {
+        return remaining;
     }
 
-    public CardList(String deck_id, List<Card> cardList, Integer remaining, Boolean success) {
-        this.deck_id = deck_id;
-        this.cardList = cardList;
+    public void setRemaining(Integer remaining) {
         this.remaining = remaining;
-        this.success = success;
     }
 }

@@ -23,7 +23,7 @@ public class Card{
     @SerializedName("image")
     String imageUrl;
     @SerializedName("code")
-    String code;
+    public String code;
     @SerializedName("value")
     String value;
 

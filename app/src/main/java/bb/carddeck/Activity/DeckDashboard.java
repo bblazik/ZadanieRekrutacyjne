@@ -4,17 +4,12 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import bb.carddeck.API.Query;
-import bb.carddeck.Adapter.CardsAdapter;
 import bb.carddeck.Logic.Composition;
 import bb.carddeck.Logic.InternetState;
 import bb.carddeck.R;
@@ -33,7 +28,6 @@ public class DeckDashboard extends ListActivity{
     @BindView(R.id.Composition) TextView composition;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
-    CardsAdapter adapter;
     Deck deck;
     final int NumberOfCards = 5;
     InternetState internetState;
@@ -43,7 +37,7 @@ public class DeckDashboard extends ListActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deck_dashboard);
+        setContentView(R.layout.deck_dashboard);
         ButterKnife.bind(this);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -53,32 +47,32 @@ public class DeckDashboard extends ListActivity{
         numberOfDecks = intent.getIntExtra("numberOfDecks", 1);
         NumOfDecks.setText(numberOfDecks.toString());
 
-        reshuffleButton.setOnClickListener(listener);
-
         internetState = new InternetState(getBaseContext());
         if(!internetState.isOnline()) return;
 
+        /*
         adapter = new CardsAdapter(DeckDashboard.this, new ArrayList<Card>());
         setListAdapter(adapter);
 
         setProgressBarState(true);
-        PopulateAdapter();
+        populateAdapter();
+        */
     }
 
     static String communicate(List<Card> ls){
         StringBuilder sb = new StringBuilder();
         Composition c = new Composition();
 
-        if(c.ContainsColor(ls)){
+        if(Composition.ContainsColor(ls)){
             sb.append("Color! ");
         }
-        if (c.ContainsStairs(ls)) {
+        if (Composition.ContainsStairs(ls)) {
             sb.append("Stairs! ");
         }
-        if(c.ContainsThreeFigures(ls)){
+        if(Composition.ContainsThreeFigures(ls)){
             sb.append("Three figures! ");
         }
-        if(c.ContainsTwins(ls)){
+        if(Composition.ContainsTwins(ls)){
             sb.append("Twins! ");
         }
         if(sb.toString().equals(""))
@@ -86,8 +80,8 @@ public class DeckDashboard extends ListActivity{
 
         return sb.toString();
     }
-
-    void PopulateAdapter(){
+    /*
+    void populateAdapter(){
         deck = Query.GetDeck(numberOfDecks);
         Query.GetCardsAsync(deck.getDeck_id(), NumberOfCards, adapter, DeckDashboard.this);
     }
@@ -110,19 +104,20 @@ public class DeckDashboard extends ListActivity{
         if(cardList.getRemaining().equals(0)){
             deck = Query.GetShuffle(deck.getDeck_id());
         }
-    }
-
+    }*/
+/*
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if(!internetState.isOnline()) return;
             setProgressBarState(true);
             if(deck == null){
-                PopulateAdapter();
+                populateAdapter();
             }else{
                 checkRemaining(cardList);
                 Query.GetCardsAsync(deck.getDeck_id(), NumberOfCards, adapter, DeckDashboard.this);
             }
         }
     };
+    */
 }

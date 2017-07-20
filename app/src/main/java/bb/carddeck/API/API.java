@@ -5,28 +5,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
-import java.util.List;
 
-import bb.carddeck.model.Card;
-import bb.carddeck.model.CardList;
-import bb.carddeck.model.Deck;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.*;
-import retrofit2.http.Query;
 
 public class API {
-
-    private static APIInterface apiInterface;
     private static String url = "https://deckofcardsapi.com/";
-    public static APIInterface getClient() {
-        if (apiInterface == null) {
+    public DeckOfCardsService getClient() {
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .addInterceptor(
                             new Interceptor() {
@@ -47,22 +36,6 @@ public class API {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(okHttpClient)
                     .build();
-            apiInterface = client.create(APIInterface.class);
-        }
-        return apiInterface;
-    }
-    public interface APIInterface {
-
-        @GET("api/deck/new/shuffle/")
-        Call<Deck> GetShuffledDeck( @Query("deck_count") Integer number);
-
-        @GET("api/deck/{deck_id}/draw/")
-        Call<CardList> GetCards(@Path(value ="deck_id") String deck_id, @Query("count") Integer number);
-
-        @GET("api/deck/{deck_id}/draw/")
-        Call<ResponseBody> GetCardsT(@Path(value ="deck_id") String deck_id, @Query("count") Integer number);
-
-        @GET("api/deck/{deck_id}/shuffle")
-        Call<Deck> GetShuffle(@Path(value = "deck_id") String deck_id);
+        return client.create(DeckOfCardsService.class);
     }
 }

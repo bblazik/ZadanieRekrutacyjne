@@ -7,13 +7,15 @@ import android.content.Context;
 import bb.carddeck.Injection.Component.ApplicationComponent;
 import bb.carddeck.Injection.Component.DaggerApplicationComponent;
 import bb.carddeck.Injection.Module.ApplicationModule;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 //import bb.carddeck.Injection.Component.DaggerApplicationComponent;
 
 
 public class CardDeckApplication extends Application{
 
     ApplicationComponent mApplicationComponent;
-
+    private Scheduler scheduler;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -34,5 +36,12 @@ public class CardDeckApplication extends Application{
     // Needed to replace the component with a test specific one
     public void setComponent(ApplicationComponent applicationComponent) {
         mApplicationComponent = applicationComponent;
+    }
+
+    public Scheduler subscribeScheduler() {
+        if (scheduler == null) {
+            scheduler = Schedulers.io();
+        }
+        return scheduler;
     }
 }

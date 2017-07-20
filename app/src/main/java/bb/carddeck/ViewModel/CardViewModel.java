@@ -86,6 +86,8 @@ public class CardViewModel{
         }
     };
     void getCardList(String deckId, Integer numberOfCards){
+        CardDeckApplication cardDeckApplication = CardDeckApplication.get(context);
+
         mCompositeDisposable.add(mDataManager.getCards(deckId,numberOfCards)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(mDataManager.getScheduler())
@@ -98,7 +100,7 @@ public class CardViewModel{
                         rem.set(mCardList.getRemaining().toString());
                         mCardAdapter.setItems(cardList.getCardList());
 
-                        Toast.makeText(context, "CardlistSize: " + cardList.getCardList().size(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "CardlistSize: " + cardList.getCardList().size(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

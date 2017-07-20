@@ -52,6 +52,9 @@ public class DeckDashboard extends ListActivity{
         setContentView(R.layout.deck_dashboard);
         ButterKnife.bind(this);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setupAdapter();
         initDataBinding();
 

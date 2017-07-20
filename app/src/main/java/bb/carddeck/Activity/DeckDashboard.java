@@ -1,15 +1,25 @@
 package bb.carddeck.Activity;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import bb.carddeck.API.DataManager;
+import bb.carddeck.Adapter.CardAdapter;
+import bb.carddeck.CardDeckApplication;
 import bb.carddeck.Logic.Composition;
 import bb.carddeck.Logic.InternetState;
 import bb.carddeck.R;
@@ -18,6 +28,14 @@ import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.subjects.Subject;
+import io.reactivex.subscribers.*;
 
 public class DeckDashboard extends ListActivity{
 
@@ -28,11 +46,16 @@ public class DeckDashboard extends ListActivity{
     @BindView(R.id.Composition) TextView composition;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
-    Deck deck;
+    Deck mDeck;
     final int NumberOfCards = 5;
     InternetState internetState;
     Integer numberOfDecks;
     CardList cardList;
+    List<Card> ls;
+
+    private DataManager mDataManager;
+    private CardAdapter mCardAdapter;
+    CompositeDisposable mCompositeDisposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +73,14 @@ public class DeckDashboard extends ListActivity{
         internetState = new InternetState(getBaseContext());
         if(!internetState.isOnline()) return;
 
+        mCompositeDisposable = new CompositeDisposable();
+        mDataManager = CardDeckApplication.get(this).getComponent().dataManager();
+        //ls =
+        mCardAdapter = new CardAdapter(this, new ArrayList<Card>());
+        setListAdapter(mCardAdapter);
+
+        //getDeck();
+        getCardList("new", 5);
         /*
         adapter = new CardsAdapter(DeckDashboard.this, new ArrayList<Card>());
         setListAdapter(adapter);
@@ -58,6 +89,53 @@ public class DeckDashboard extends ListActivity{
         populateAdapter();
         */
     }
+
+    void getDeck(Integer n) {
+        mCompositeDisposable.add(mDataManager.getDeck(n)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mDataManager.getScheduler())
+                .subscribeWith(new DisposableObserver<Deck>() {
+                    @Override
+                    public void onNext(@NonNull Deck deck) {
+                        mDeck = deck;
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                }));
+    }
+
+    void getCardList(String deckId, Integer numberOfCards){
+        mCompositeDisposable.add(mDataManager.getCards(deckId,numberOfCards)
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribeOn(mDataManager.getScheduler())
+        .subscribeWith(new DisposableObserver<CardList>() {
+            @Override
+            public void onNext(@NonNull CardList cardList) {
+                mCardAdapter.setItems(cardList.getCardList());
+                Toast.makeText(getBaseContext(), "CardlistSize: " + cardList.getCardList().size(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        }));
+    }
+
 
     static String communicate(List<Card> ls){
         StringBuilder sb = new StringBuilder();

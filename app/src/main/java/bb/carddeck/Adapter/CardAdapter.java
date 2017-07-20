@@ -1,73 +1,73 @@
 package bb.carddeck.Adapter;
 
-
-import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
+import android.app.Activity;
+import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import bb.carddeck.R;
-import bb.carddeck.ViewModel.CardViewModel;
-import bb.carddeck.databinding.DeckDashboardBinding;
 import bb.carddeck.model.Card;
 
-public class CardAdapter extends RecyclerView.Adapter<CardAdapter.BindingHolder> {
-    private List<Card> mCards;
-    private Context mContext;
+public class CardAdapter extends ArrayAdapter<Card> {
+    private final List<Card> list;
+    private final Activity context;
 
-    public CardAdapter(Context context){
-        mContext = context;
-        mCards = new ArrayList<>();
+    static class ViewHolder {
+        protected TextView name;
+        protected ImageView cardImg;
     }
 
-    @Override
-    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        DeckDashboardBinding cardBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
-                R.layout.deck_dashboard,
-                parent,
-                false
-        );
-        return new BindingHolder(cardBinding);
+    public CardAdapter(Activity context, List<Card> ls) {
+        super(context, R.layout.card_row, ls);
+        this.context = context;
+        this.list = ls;
     }
 
-    @Override
-    public void onBindViewHolder(BindingHolder holder, int position) {
-        DeckDashboardBinding cardBinding = holder.binding;
-        cardBinding.setViewModel(new CardViewModel(mContext, mCards.get(position)));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mCards.size();
-    }
-
-    public void setItems(List<Card> cards){
-        mCards = cards;
+    public void setItems(List<Card> cards) { //TODO check if there is a better way Observer?
+        list.clear();
+        list.addAll(cards);
         notifyDataSetChanged();
     }
 
-    public void addItem(Card card) {
-        if (!mCards.contains(card)) {
-            mCards.add(card);
-            notifyItemInserted(mCards.size() - 1);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = null;
+
+        if (convertView == null) {
+            LayoutInflater inflator = context.getLayoutInflater();
+            view = inflator.inflate(R.layout.card_row, null);
+            final ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) view.findViewById(R.id.cardName);
+            viewHolder.cardImg = (ImageView) view.findViewById(R.id.cardImg);
+            view.setTag(viewHolder);
         } else {
-            mCards.set(mCards.indexOf(card), card);
-            notifyItemChanged(mCards.indexOf(card));
+            view = convertView;
+        }
+
+        ViewHolder holder = (ViewHolder) view.getTag();
+        holder.name.setText(list.get(position).getCode());
+        holder.cardImg.setImageDrawable(LoadImageFromWebOperations(list.get(position).getImageUrl()));
+        return view;
+    }
+
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
         }
     }
 
-    public static class BindingHolder extends RecyclerView.ViewHolder {
-        private DeckDashboardBinding binding;
-
-        public BindingHolder(DeckDashboardBinding binding) {
-            super(binding.list);
-            this.binding = binding;
-        }
-    }
 }
-

@@ -2,6 +2,9 @@ package bb.carddeck.API;
 
 import android.content.Context;
 
+import bb.carddeck.CardDeckApplication;
+import bb.carddeck.Injection.Component.DaggerDataManagerComponent;
+import bb.carddeck.Injection.Module.DataManagerModule;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
 import io.reactivex.Observable;
@@ -23,15 +26,17 @@ public class DataManager {
         injectDependencies(context); //?
     }
 
-    public DataManager(DeckOfCardsService service, Scheduler subscribeSheduler){
+    public DataManager(DeckOfCardsService service, Scheduler subscribeScheduler){
         mDeckOfCardsService = service;
-        mSubscribeScheduler = subscribeSheduler;
+        mSubscribeScheduler = subscribeScheduler;
     }
 
     protected void injectDependencies(Context context){
-       // DaggerDataManagerCompo
-
-
+        DaggerDataManagerComponent.builder()
+                .applicationComponent(CardDeckApplication.get(context).getComponent())
+                .dataManagerModule(new DataManagerModule())
+                .build()
+                .inject(this);
     }
 
     public Scheduler getScheduler(){

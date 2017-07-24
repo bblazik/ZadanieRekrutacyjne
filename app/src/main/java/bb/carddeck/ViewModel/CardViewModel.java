@@ -3,12 +3,8 @@ package bb.carddeck.ViewModel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Toast;
-
-import java.io.InputStream;
-import java.net.URL;
 
 import bb.carddeck.API.DataManager;
 import bb.carddeck.Adapter.CardAdapter;
@@ -22,21 +18,18 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 
-public class CardViewModel{
+public class CardViewModel extends BaseObservable{
     private Context context;
-    private Card card;
-    public CardList mCardList;
-
-    public  ObservableField<String> rem = new ObservableField<>();
+    public CardList mCardList = new CardList();
+    public ObservableField<Boolean> progressBarVisible = new ObservableField<>();
 
     private DataManager mDataManager;
     private CardAdapter mCardAdapter;
     private CompositeDisposable mCompositeDisposable;
+    private final int numberOfCards = 15;
 
 
     public CardViewModel(Context context) {
@@ -52,55 +45,34 @@ public class CardViewModel{
         mCompositeDisposable = new CompositeDisposable();
         mDataManager = CardDeckApplication.get(this.context).getComponent().dataManager();
         mCardAdapter = cardAdapter;
-        getCardList("new", 5);
+        getCardList("new", numberOfCards);
         Toast.makeText(context, "Create ViewModel", Toast.LENGTH_SHORT).show();
     }
-
-    public String getCode() {
-        return card.code;
-    }
-    public Drawable getImg() {
-        return LoadImageFromWebOperations(card.getImageUrl());
-    }
-
 
     public View.OnClickListener onClickedRedrawButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            /*
-            if(!internetState.isOnline()) return;
-            setProgressBarState(true);
-            if(deck == null){
-                populateAdapter();
-            }else{
-                checkRemaining(cardList);
-                Query.GetCardsAsync(deck.getDeck_id(), NumberOfCards, adapter, DeckDashboard.this);
-            }*/
-
-            if(mCardList!=null)
-                getCardList(mCardList.deck_id, 5);
+            if(mCardList!=null){
+                shuffleIfRemainingEqualsZero(mCardList);
+                getCardList(mCardList.deck_id, numberOfCards);
+            }
             else
-                getCardList("new", 5);
-
-            Toast.makeText(context, "Click!", Toast.LENGTH_SHORT).show();
+                getCardList("new", numberOfCards);
         }
     };
     void getCardList(String deckId, Integer numberOfCards){
-        CardDeckApplication cardDeckApplication = CardDeckApplication.get(context);
-
+        progressBarVisible.set(true);
         mCompositeDisposable.add(mDataManager.getCards(deckId,numberOfCards)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(mDataManager.getScheduler())
                 .subscribeWith(new DisposableObserver<CardList>() {
                     @Override
                     public void onNext(@NonNull CardList cardList) {
-                        //setProgressBarState(false);
+
                         mCardList = cardList;
+                        notifyChange();
 
-                        rem.set(mCardList.getRemaining().toString());
                         mCardAdapter.setItems(cardList.getCardList());
-
-                        //Toast.makeText(context, "CardlistSize: " + cardList.getCardList().size(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -110,27 +82,41 @@ public class CardViewModel{
 
                     @Override
                     public void onComplete() {
+                        progressBarVisible.set(false);
+                    }
+                }));
+    }
+
+    void getShuffle(String deckId){
+        mCompositeDisposable.add(mDataManager.getShuffleDeck(deckId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(mDataManager.getScheduler())
+                .subscribeWith(new DisposableObserver<Deck>() {
+                    @Override
+                    public void onNext(@NonNull Deck deck) {
+                        getCardList(deck.getDeck_id(), numberOfCards);
+                        Toast.makeText(context, "Cards get shuffled ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Toast.makeText(context, "Error while shuffle " + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
                 }));
     }
 
-    public static Drawable LoadImageFromWebOperations(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
+    public Boolean shuffleIfRemainingEqualsZero(CardList cardList){
+        if(cardList.getRemaining() == "0"){ // eq by value
+            getShuffle(cardList.getDeck_id());
+            return true;
+        }else
+            return false;
     }
-
-    /*
-    public void setProgressBarState(Boolean barState){
-        if(barState) progressBar.setVisibility(View.VISIBLE);
-        else progressBar.setVisibility(View.GONE);
-    }*/
-
 
     static String communicate(List<Card> ls){
         StringBuilder sb = new StringBuilder();

@@ -1,7 +1,10 @@
 package bb.carddeck.model;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
 import android.databinding.ObservableField;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.List;
  * Created by barte_000 on 11.07.2017.
  */
 
-public class CardList{
+public class CardList extends BaseObservable{
 
     @SerializedName("deck_id")
     public String deck_id;
@@ -22,7 +25,7 @@ public class CardList{
     public Boolean success;
 
     @SerializedName("remaining")
-    Integer remaining;
+    public Integer remaining = 0;
 
     public String getDeck_id() {
         return deck_id;
@@ -36,8 +39,10 @@ public class CardList{
         return cardList;
     }
 
+    @Bindable
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
+        //notifyPropertyChanged(BR.list);
     }
 
     public Boolean getSuccess() {
@@ -47,12 +52,13 @@ public class CardList{
     public void setSuccess(Boolean success) {
         this.success = success;
     }
-
-    public Integer getRemaining() {
-        return remaining;
+    @Bindable
+    public String getRemaining() {
+        return remaining.toString();
     }
 
     public void setRemaining(Integer remaining) {
         this.remaining = remaining;
+        notifyPropertyChanged(BR.remaining);
     }
 }

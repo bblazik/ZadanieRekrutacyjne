@@ -14,14 +14,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:src="@{viewModel.getImg}"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
         android:id="@+id/cardName"
         android:layout_width="wrap_content"
         android:layout_height="49dp"
-        android:layout_weight="1"
-        android:text= "@{viewModel.getCode}" />
+        android:layout_weight="1" />
 </LinearLayout>
 </layout>

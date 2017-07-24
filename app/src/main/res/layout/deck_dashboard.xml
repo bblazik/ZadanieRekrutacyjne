@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable name="viewModel" type="bb.carddeck.ViewModel.CardViewModel" />
     </data>
 
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="@{viewModel.rem}"/>
+            android:text="@{viewModel.mCardList.getRemaining}"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -80,6 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:visibility="@{viewModel.progressBarVisible ? View.VISIBLE : View.GONE  }"
              />
 
     </RelativeLayout>

@@ -40,6 +40,10 @@ public class CardViewModel extends BaseObservable{
         Toast.makeText(context, "Create ViewModel", Toast.LENGTH_SHORT).show();
     }
 
+    public List<Card> getCardList(){
+        return mCardList.getCardList();
+    }
+
     public CardViewModel(Context context, CardAdapter cardAdapter) {
         this.context = context;
         mCompositeDisposable = new CompositeDisposable();
@@ -70,9 +74,8 @@ public class CardViewModel extends BaseObservable{
                     public void onNext(@NonNull CardList cardList) {
 
                         mCardList = cardList;
+                        mCardAdapter.setCardList(cardList.getCardList()); //TODO Check if there is a better way
                         notifyChange();
-
-                        mCardAdapter.setCardList(cardList.getCardList());
                     }
 
                     @Override

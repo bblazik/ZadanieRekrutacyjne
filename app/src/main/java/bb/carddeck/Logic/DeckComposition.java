@@ -29,6 +29,8 @@ public class DeckComposition {
             if(Math.abs(mCardList.get(i).getCardRank() - mCardList.get(i+1).getCardRank()) == 1){
                 series++;
                 if(series >= 3) return true;
+            }else{
+                series = 1;
             }
         }
         return false;

@@ -20,7 +20,9 @@ public interface DeckOfCardsService {
     * Return list of cards
     *  */
     @GET("api/deck/{deck_id}/draw/")
-    Observable<CardList> getCards(@Path(value ="deck_id") String deck_id, @retrofit2.http.Query("count") Integer number);
+    Observable<CardList> getCards(@Path(value ="deck_id") String deck_id,
+                                  @Query("count") Integer number,
+                                  @Query("deck_count") Integer deckNumber);
 
     /*
     * Return shuffled deck

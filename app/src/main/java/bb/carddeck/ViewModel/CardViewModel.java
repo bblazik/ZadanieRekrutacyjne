@@ -1,8 +1,11 @@
 package bb.carddeck.ViewModel;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +29,7 @@ public class CardViewModel extends BaseObservable{
     private Context context;
     public CardList mCardList = new CardList();
     public ObservableField<Boolean> progressBarVisible = new ObservableField<>();
+    public final ObservableField<Integer> numberOfDecks = new ObservableField();
 
     private DataManager mDataManager;
     private CardAdapter mCardAdapter;
@@ -33,25 +37,13 @@ public class CardViewModel extends BaseObservable{
     private final int numberOfCards = 5;
 
 
-    public CardViewModel(Context context) {
-        this.context = context;
-        mCompositeDisposable = new CompositeDisposable();
-        mDataManager = CardDeckApplication.get(this.context).getComponent().dataManager();
-
-        Toast.makeText(context, "Create ViewModel", Toast.LENGTH_SHORT).show();
-    }
-
-    public List<Card> getCardList(){
-        return mCardList.cardList;
-    }
-
-    public CardViewModel(Context context, CardAdapter cardAdapter) {
+    public CardViewModel(Context context, CardAdapter cardAdapter, Integer numberOfDecks) {
         this.context = context;
         mCompositeDisposable = new CompositeDisposable();
         mDataManager = CardDeckApplication.get(this.context).getComponent().dataManager();
         mCardAdapter = cardAdapter;
+        this.numberOfDecks.set(numberOfDecks);
         getCardList("new", numberOfCards);
-        Toast.makeText(context, "Create ViewModel", Toast.LENGTH_SHORT).show();
     }
 
     public View.OnClickListener onClickedRedrawButton = new View.OnClickListener() {
@@ -67,7 +59,7 @@ public class CardViewModel extends BaseObservable{
     };
     void getCardList(String deckId, Integer numberOfCards){
         progressBarVisible.set(true);
-        mCompositeDisposable.add(mDataManager.getCards(deckId,numberOfCards)
+        mCompositeDisposable.add(mDataManager.getCards(deckId,numberOfCards, numberOfDecks.get())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(mDataManager.getScheduler())
                 .subscribeWith(new DisposableObserver<CardList>() {
@@ -142,5 +134,9 @@ public class CardViewModel extends BaseObservable{
             return context.getString(R.string.composition);
 
         return sb.toString();
+    }
+
+    public String getNumberOfDecks(){
+        return numberOfDecks.get().toString();
     }
 }

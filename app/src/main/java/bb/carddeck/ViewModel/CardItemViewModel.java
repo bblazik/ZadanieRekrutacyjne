@@ -29,7 +29,10 @@ public class CardItemViewModel extends BaseObservable {
 
     @BindingAdapter("imageUrl")
     public static void getImg(ImageView imageView, String url){
-        Glide.with(imageView.getContext()).load(url).into(imageView);
+
+        Glide.with(imageView.getContext())
+                .load(url)
+                .into(imageView);
     }
 
     public void setCard(Card card) {

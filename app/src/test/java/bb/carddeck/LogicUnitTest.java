@@ -3,6 +3,8 @@ package bb.carddeck;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import bb.carddeck.Logic.DeckComposition;
@@ -16,32 +18,36 @@ import static org.junit.Assert.assertTrue;
  */
 
 public class LogicUnitTest {
+    DeckComposition deckComposition;
 
     @Test
-    public void GetCardRankNumberTest() throws Exception {
-        assertEquals(DeckComposition.GetCardRank(new Card("8C")),8);
+    public void getCardRankNumberTest() throws Exception {
+
+        assertEquals(new Card("8C").getCardRank(),8);
     }
 
     @Test
     public void GetCardRankFigureTest() throws Exception {
-        assertEquals(DeckComposition.GetCardRank(new Card("AC")),1);
+        assertEquals(new Card("AC").getCardRank(),1);
     }
 
     @Test
     public void GetCardColor() throws Exception {
-        assertEquals(DeckComposition.GetCardColor(new Card("AC")), 2);
+        assertEquals(new Card("AC").getCardColor(), 2);
     }
 
     @Test
     public void ContainsColor() throws Exception {
         //COLOR, TWINS
         List<Card> c = new ArrayList<>();
-        c.add(new Card("8C"));
-        c.add(new Card("8C"));
+        c.add(new Card("8S"));
+        c.add(new Card("8S"));
         c.add(new Card("9H"));
-        c.add(new Card("AD"));
-        c.add(new Card("8C"));
-        assertTrue(DeckComposition.containsColor(c));
+        c.add(new Card("AS"));
+        c.add(new Card("8S"));
+
+        deckComposition = new DeckComposition(c);
+        assertTrue(deckComposition.containsColor());
     }
 
     @Test
@@ -53,7 +59,9 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertFalse(DeckComposition.containsColor(c));
+
+        deckComposition = new DeckComposition(c);
+        assertFalse(deckComposition.containsColor());
     }
 
     @Test
@@ -64,7 +72,8 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(DeckComposition.containsTwins(c));
+        deckComposition = new DeckComposition(c);
+        assertTrue(deckComposition.containsTwins());
     }
 
     @Test
@@ -75,7 +84,9 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("9D"));
-        assertFalse(DeckComposition.containsTwins(c));
+
+        deckComposition = new DeckComposition(c);
+        assertFalse(deckComposition.containsTwins());
     }
 
     @Test
@@ -86,7 +97,8 @@ public class LogicUnitTest {
         c.add(new Card("KH"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(DeckComposition.containsThreeFigures(c));
+        deckComposition = new DeckComposition(c);
+        assertTrue(deckComposition.containsThreeFigures());
     }
 
     @Test
@@ -97,7 +109,9 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("9D"));
-        assertFalse(DeckComposition.containsThreeFigures(c));
+
+        deckComposition = new DeckComposition(c);
+        assertFalse(deckComposition.containsThreeFigures());
     }
 
     @Test
@@ -108,18 +122,22 @@ public class LogicUnitTest {
         c.add(new Card("KH"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(DeckComposition.containsStairs(c));
+
+        deckComposition = new DeckComposition(c);
+        assertTrue(deckComposition.containsStairs());
     }
 
     @Test
     public void NotContainsStairs() throws Exception {
         List<Card> c = new ArrayList<>();
         c.add(new Card("8C"));
-        c.add(new Card("8C"));
-        c.add(new Card("9H"));
-        c.add(new Card("AD"));
-        c.add(new Card("9D"));
-        assertFalse(DeckComposition.containsStairs(c));
+        c.add(new Card("7C"));
+        c.add(new Card("8H"));
+        c.add(new Card("JD"));
+        c.add(new Card("QD"));
+
+        deckComposition = new DeckComposition(c);
+        assertFalse(deckComposition.containsStairs());
     }
 
     @Test
@@ -131,11 +149,12 @@ public class LogicUnitTest {
         c.add(new Card("AD"));
         c.add(new Card("8C"));
 
-        DeckComposition.SortCards(c);
-        assertEquals(c.get(0).getCode(), "AD");
-        assertEquals(c.get(1).getCode(), "8C");
-        assertEquals(c.get(2).getCode(), "JC");
-        assertEquals(c.get(3).getCode(), "QC");
-        assertEquals(c.get(4).getCode(), "KH");
+        Collections.sort(c);
+
+        assertEquals(c.get(0).code, "AD");
+        assertEquals(c.get(1).code, "8C");
+        assertEquals(c.get(2).code, "JC");
+        assertEquals(c.get(3).code, "QC");
+        assertEquals(c.get(4).code, "KH");
     }
 }

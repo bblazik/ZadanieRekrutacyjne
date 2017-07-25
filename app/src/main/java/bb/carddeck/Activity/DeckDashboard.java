@@ -29,7 +29,9 @@ public class DeckDashboard extends AppCompatActivity {
     private void initDataBinding() {
         deckDashboardBinding = DataBindingUtil.setContentView(this, R.layout.deck_dashboard);
         setupAdapter();
-        cardViewModel = new CardViewModel(this, mCardAdapter); // TODO Inject adapter to ViewModel.
+        cardViewModel = new CardViewModel(this,
+                mCardAdapter,
+                getIntent().getIntExtra("numberOfDecks", 1));
         deckDashboardBinding.setViewModel(cardViewModel);
     }
 

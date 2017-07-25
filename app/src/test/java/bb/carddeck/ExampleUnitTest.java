@@ -39,7 +39,7 @@ public class ExampleUnitTest {
 
         CardList cl = new Gson().fromJson(o, CardList.class);
         assert(cl != null);
-        assertEquals(cards.get(0).getCode(),"4S");
-        assertEquals(cards.get(0).getImg().getPng(), "http://deckofcardsapi.com/static/img/4S.png");
+        assertEquals(cards.get(0).code,"4S");
+        assertEquals(cards.get(0).img.png, "http://deckofcardsapi.com/static/img/4S.png");
     }
 }

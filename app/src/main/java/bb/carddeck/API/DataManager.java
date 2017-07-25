@@ -67,8 +67,8 @@ public class DataManager {
                 });
     }
 
-    public Observable<CardList> getCards(String deckId, Integer numberOfCards){
-        return mDeckOfCardsService.getCards(deckId, numberOfCards)
+    public Observable<CardList> getCards(String deckId, Integer numberOfCards, Integer numberOfDecks){
+        return mDeckOfCardsService.getCards(deckId, numberOfCards, numberOfDecks)
                 .concatMap(new Function<CardList, ObservableSource<? extends CardList>>() {
                     @Override
                     public ObservableSource<? extends CardList> apply(@NonNull CardList cardList) throws Exception {

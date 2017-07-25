@@ -42,6 +42,10 @@ public class Card implements Comparable<Card>{
         }
     }
 
+    public Card(String code) {
+        this.code = code;
+    }
+
     @Override
     public int compareTo(@NonNull Card o) {
         return this.getCardRank() - o.getCardRank();

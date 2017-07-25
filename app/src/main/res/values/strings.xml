@@ -8,5 +8,10 @@
     <string name="remaining">Remaining cards: </string>
     <string name="decks">Number of decks: </string>
     <string name="ReshuffleButton">Redraw</string>
-    <string name="Composition">Unfortunately nothing matches </string>
+    <string name="composition">Unfortunately nothing matches </string>
+
+    <string name="stairs"> Stairs! </string>
+    <string name="color"> Color! </string>
+    <string name="figures"> Three figures! </string>
+    <string name="twins"> Twins! </string>
 </resources>

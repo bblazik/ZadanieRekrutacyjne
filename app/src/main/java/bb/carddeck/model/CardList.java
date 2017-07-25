@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class CardList extends BaseObservable{
     public String deck_id;
 
     @SerializedName("cards")
-    public List<Card> cardList;
+    public List<Card> cardList = new ArrayList<>();
 
     @SerializedName("success")
     public Boolean success;

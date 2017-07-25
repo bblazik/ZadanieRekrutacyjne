@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import bb.carddeck.Logic.Composition;
+import bb.carddeck.Logic.DeckComposition;
 import bb.carddeck.model.Card;
 
 import static org.junit.Assert.assertEquals;
@@ -19,17 +19,17 @@ public class LogicUnitTest {
 
     @Test
     public void GetCardRankNumberTest() throws Exception {
-        assertEquals(Composition.GetCardRank(new Card("8C")),8);
+        assertEquals(DeckComposition.GetCardRank(new Card("8C")),8);
     }
 
     @Test
     public void GetCardRankFigureTest() throws Exception {
-        assertEquals(Composition.GetCardRank(new Card("AC")),1);
+        assertEquals(DeckComposition.GetCardRank(new Card("AC")),1);
     }
 
     @Test
     public void GetCardColor() throws Exception {
-        assertEquals(Composition.GetCardColor(new Card("AC")), 2);
+        assertEquals(DeckComposition.GetCardColor(new Card("AC")), 2);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(Composition.ContainsColor(c));
+        assertTrue(DeckComposition.containsColor(c));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertFalse(Composition.ContainsColor(c));
+        assertFalse(DeckComposition.containsColor(c));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(Composition.ContainsTwins(c));
+        assertTrue(DeckComposition.containsTwins(c));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("9D"));
-        assertFalse(Composition.ContainsTwins(c));
+        assertFalse(DeckComposition.containsTwins(c));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class LogicUnitTest {
         c.add(new Card("KH"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(Composition.ContainsThreeFigures(c));
+        assertTrue(DeckComposition.containsThreeFigures(c));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("9D"));
-        assertFalse(Composition.ContainsThreeFigures(c));
+        assertFalse(DeckComposition.containsThreeFigures(c));
     }
 
     @Test
@@ -108,7 +108,7 @@ public class LogicUnitTest {
         c.add(new Card("KH"));
         c.add(new Card("AD"));
         c.add(new Card("8C"));
-        assertTrue(Composition.ContainsStairs(c));
+        assertTrue(DeckComposition.containsStairs(c));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class LogicUnitTest {
         c.add(new Card("9H"));
         c.add(new Card("AD"));
         c.add(new Card("9D"));
-        assertFalse(Composition.ContainsStairs(c));
+        assertFalse(DeckComposition.containsStairs(c));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class LogicUnitTest {
         c.add(new Card("AD"));
         c.add(new Card("8C"));
 
-        Composition.SortCards(c);
+        DeckComposition.SortCards(c);
         assertEquals(c.get(0).getCode(), "AD");
         assertEquals(c.get(1).getCode(), "8C");
         assertEquals(c.get(2).getCode(), "JC");

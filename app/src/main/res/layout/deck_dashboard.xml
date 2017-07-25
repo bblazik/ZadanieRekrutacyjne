@@ -25,13 +25,13 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/ReshuffleButton"
+            android:layout_width="match_parent"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/NumDecks"
             android:descendantFocusability="beforeDescendants"
-            tools:listitem="@layout/card_row" />
+            android:layout_above="@+id/ReshuffleButton"
+            tools:listitem="@layout/card_row"/>
 
         <TextView
             android:id="@+id/NumberOfRemainingCards"
@@ -71,7 +71,7 @@
             android:id="@+id/Composition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Composition"
+            android:text="@{viewModel.communicate}"
             android:layout_alignBaseline="@+id/ReshuffleButton"
             android:layout_alignBottom="@+id/ReshuffleButton"
             android:layout_alignEnd="@+id/textView3" />

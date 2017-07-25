@@ -9,7 +9,8 @@ import android.widget.Toast;
 import bb.carddeck.API.DataManager;
 import bb.carddeck.Adapter.CardAdapter;
 import bb.carddeck.CardDeckApplication;
-import bb.carddeck.Logic.Composition;
+import bb.carddeck.Logic.DeckComposition;
+import bb.carddeck.R;
 import bb.carddeck.model.Card;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
@@ -121,24 +122,24 @@ public class CardViewModel extends BaseObservable{
             return false;
     }
 
-    static String communicate(List<Card> ls){
+    public String communicate(){
         StringBuilder sb = new StringBuilder();
-        Composition c = new Composition();
+        DeckComposition deckComposition = new DeckComposition(mCardList.cardList);
 
-        if(Composition.ContainsColor(ls)){
-            sb.append("Color! ");
+        if(deckComposition.containsColor()){
+            sb.append(context.getString(R.string.color));
         }
-        if (Composition.ContainsStairs(ls)) {
-            sb.append("Stairs! ");
+        if (deckComposition.containsStairs()) {
+            sb.append(context.getString(R.string.stairs));
         }
-        if(Composition.ContainsThreeFigures(ls)){
-            sb.append("Three figures! ");
+        if(deckComposition.containsThreeFigures()){
+            sb.append(context.getString(R.string.figures));
         }
-        if(Composition.ContainsTwins(ls)){
-            sb.append("Twins! ");
+        if(deckComposition.containsTwins()){
+            sb.append(context.getString(R.string.twins));
         }
         if(sb.toString().equals(""))
-            return "Unfortunately nothing matches";
+            return context.getString(R.string.composition);
 
         return sb.toString();
     }

@@ -29,7 +29,7 @@ public class CardViewModel extends BaseObservable{
     private DataManager mDataManager;
     private CardAdapter mCardAdapter;
     private CompositeDisposable mCompositeDisposable;
-    private final int numberOfCards = 15;
+    private final int numberOfCards = 5;
 
 
     public CardViewModel(Context context) {
@@ -72,7 +72,7 @@ public class CardViewModel extends BaseObservable{
                         mCardList = cardList;
                         notifyChange();
 
-                        mCardAdapter.setItems(cardList.getCardList());
+                        mCardAdapter.setCardList(cardList.getCardList());
                     }
 
                     @Override

@@ -2,7 +2,9 @@ package bb.carddeck.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
+import android.widget.ListView;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.annotations.SerializedName;
@@ -42,7 +44,7 @@ public class CardList extends BaseObservable{
     @Bindable
     public void setCardList(List<Card> cardList) {
         this.cardList = cardList;
-        //notifyPropertyChanged(BR.list);
+        notifyPropertyChanged(BR.cardList);
     }
 
     public Boolean getSuccess() {

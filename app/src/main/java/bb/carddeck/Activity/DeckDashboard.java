@@ -4,6 +4,8 @@ import android.app.ListActivity;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ import bb.carddeck.model.Card;
 
 
 
-public class DeckDashboard extends ListActivity{
+public class DeckDashboard extends AppCompatActivity{
 
     CardViewModel cardViewModel;
     DeckDashboardBinding deckDashboardBinding;
@@ -25,24 +27,27 @@ public class DeckDashboard extends ListActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.deck_dashboard);
+        //setContentView(R.layout.deck_dashboard);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        setupAdapter();
+
         initDataBinding();
+
 
     }
     private void initDataBinding() {
         deckDashboardBinding = DataBindingUtil.setContentView(this, R.layout.deck_dashboard);
+        setupAdapter();
         cardViewModel = new CardViewModel(this, mCardAdapter); // TODO Inject adapter to ViewModel.
         deckDashboardBinding.setViewModel(cardViewModel);
     }
 
     private void setupAdapter(){
-        mCardAdapter = new CardAdapter(this, new ArrayList<Card>());
-        setListAdapter(mCardAdapter);
+        mCardAdapter= new CardAdapter();
+        deckDashboardBinding.list.setAdapter(mCardAdapter);
+        deckDashboardBinding.list.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

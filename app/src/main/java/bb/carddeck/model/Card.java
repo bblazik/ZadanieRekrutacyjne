@@ -21,7 +21,7 @@ public class Card{
     @SerializedName("images")
     Images img;
     @SerializedName("image")
-    String imageUrl;
+    public String imageUrl;
     @SerializedName("code")
     public String code;
     @SerializedName("value")

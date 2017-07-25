@@ -6,7 +6,7 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="viewModel" type="bb.carddeck.ViewModel.MainAppViewModel" />
+        <variable name="viewModel" type="bb.carddeck.viewModel.MainAppViewModel" />
     </data>
 
     <RelativeLayout
@@ -16,10 +16,10 @@
         android:gravity="center_horizontal"
         tools:context="bb.carddeck.view.Activity.MainActivity">
         <Button
-            android:id="@+id/PickNumber"
+            android:id="@+id/pickNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/PickNumber"
+            android:text="@string/pickNumber"
             android:layout_below="@+id/numberPicker2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="97dp"
@@ -32,7 +32,8 @@
             android:gravity="center_vertical|center_horizontal"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            tools:options = "@{viewModel.min}"
+            app:min = "@{viewModel.min}"
+            app:max = "@{viewModel.max}"
             />
 
     </RelativeLayout>

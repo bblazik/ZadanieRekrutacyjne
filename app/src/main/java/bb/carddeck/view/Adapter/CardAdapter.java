@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bb.carddeck.R;
-import bb.carddeck.ViewModel.CardItemViewModel;
+import bb.carddeck.viewModel.CardItemViewModel;
 import bb.carddeck.databinding.CardRowBinding;
 import bb.carddeck.model.Card;
 

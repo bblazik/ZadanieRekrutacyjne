@@ -4,10 +4,10 @@
     <string name="title_activity_dashboard">Cards</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="PickNumber">Pick number of decs</string>
+    <string name="pickNumber">Pick number of decs</string>
     <string name="remaining">Remaining cards: </string>
     <string name="decks">Number of decks: </string>
-    <string name="ReshuffleButton">Redraw</string>
+    <string name="reshuffleButton">Redraw</string>
     <string name="composition">Unfortunately nothing matches </string>
 
     <string name="stairs"> Stairs! </string>

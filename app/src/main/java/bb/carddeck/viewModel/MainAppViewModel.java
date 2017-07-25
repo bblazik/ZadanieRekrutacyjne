@@ -1,4 +1,4 @@
-package bb.carddeck.ViewModel;
+package bb.carddeck.viewModel;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,17 +13,18 @@ import bb.carddeck.view.Activity.DeckDashboard;
 public class MainAppViewModel extends BaseObservable{
 
     Context mContext;
-    public Integer min = 1;
+    public final Integer min = 1;
+    public final Integer max = 5;
     public static Integer pickerValue = 1;
 
     public MainAppViewModel(Context context){
         mContext = context;
     }
 
-    @BindingAdapter("options")
-    public static void setOptions(NumberPicker numberPicker, Integer min){
+    @BindingAdapter({"min", "max"})
+    public static void setOptions(NumberPicker numberPicker, Integer min, Integer max){
         numberPicker.setMinValue(min);
-        numberPicker.setMaxValue(5);
+        numberPicker.setMaxValue(max);
         numberPicker.setWrapSelectorWheel(true);
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -42,4 +43,5 @@ public class MainAppViewModel extends BaseObservable{
             mContext.startActivity(intent);
         }
     };
+
 }

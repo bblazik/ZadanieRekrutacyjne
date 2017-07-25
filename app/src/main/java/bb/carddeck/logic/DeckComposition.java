@@ -1,4 +1,4 @@
-package bb.carddeck.Logic;
+package bb.carddeck.logic;
 
 import java.util.Collections;
 import java.util.List;

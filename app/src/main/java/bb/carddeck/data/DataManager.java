@@ -23,7 +23,7 @@ public class DataManager {
     @Inject protected Scheduler mSubscribeScheduler;
 
     public DataManager(Context context){
-        injectDependencies(context); //?
+        injectDependencies(context);
     }
 
     public DataManager(DeckOfCardsService service, Scheduler subscribeScheduler){
@@ -46,14 +46,10 @@ public class DataManager {
     public Observable<Deck> getDeck(int numberOFDecks){
         return mDeckOfCardsService.getShuffledDeck(numberOFDecks)
                 .concatMap(new Function<Deck, ObservableSource<? extends Deck>>() {
-                    // concat emit the emissions from two or more Observables without interleaving them
                     @Override
                     public ObservableSource<? extends Deck> apply(@NonNull Deck deck) throws Exception {
                         return deck != null ? Observable.just(deck) : Observable.<Deck>empty();
-                         //return  Observable.just(deck);
-                        // The Just operator converts an item into an Observable that emits that item.
-                        //source http://reactivex.io/documentation/operators/just.html
-                    }
+                   }
                 });
     }
 
@@ -76,7 +72,4 @@ public class DataManager {
                     }
                 });
     }
-
-
-
 }

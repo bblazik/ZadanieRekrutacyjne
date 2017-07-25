@@ -1,4 +1,4 @@
-package bb.carddeck.ViewModel;
+package bb.carddeck.viewModel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -9,7 +9,7 @@ import android.widget.Toast;
 import bb.carddeck.data.DataManager;
 import bb.carddeck.view.Adapter.CardAdapter;
 import bb.carddeck.CardDeckApplication;
-import bb.carddeck.Logic.DeckComposition;
+import bb.carddeck.logic.DeckComposition;
 import bb.carddeck.R;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;

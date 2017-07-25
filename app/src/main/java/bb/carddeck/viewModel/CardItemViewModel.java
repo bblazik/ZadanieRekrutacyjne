@@ -1,4 +1,4 @@
-package bb.carddeck.ViewModel;
+package bb.carddeck.viewModel;
 
 import android.content.Context;
 import android.databinding.BaseObservable;

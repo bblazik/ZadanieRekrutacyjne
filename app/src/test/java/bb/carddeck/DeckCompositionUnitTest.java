@@ -3,11 +3,10 @@ package bb.carddeck;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import bb.carddeck.Logic.DeckComposition;
+import bb.carddeck.logic.DeckComposition;
 import bb.carddeck.model.Card;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  * Created by barte_000 on 13.07.2017.
  */
 
-public class LogicUnitTest {
+public class DeckCompositionUnitTest {
     DeckComposition deckComposition;
 
     @Test

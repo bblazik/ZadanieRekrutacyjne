@@ -1,4 +1,4 @@
-package bb.carddeck.Logic;
+package bb.carddeck.logic;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

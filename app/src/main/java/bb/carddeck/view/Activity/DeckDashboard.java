@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import bb.carddeck.view.Adapter.CardAdapter;
 import bb.carddeck.R;
-import bb.carddeck.ViewModel.CardViewModel;
+import bb.carddeck.viewModel.CardViewModel;
 import bb.carddeck.databinding.DeckDashboardBinding;
 
 

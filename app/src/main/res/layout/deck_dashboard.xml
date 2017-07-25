@@ -6,7 +6,7 @@
 
     <data>
         <import type="android.view.View" />
-        <variable name="viewModel" type="bb.carddeck.ViewModel.CardViewModel" />
+        <variable name="viewModel" type="bb.carddeck.viewModel.CardViewModel" />
     </data>
 
     <RelativeLayout
@@ -16,12 +16,12 @@
     android:descendantFocusability="beforeDescendants">
 
         <TextView
-            android:id="@+id/NumDecks"
+            android:id="@+id/numDecks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="15dp"
-            android:layout_toEndOf="@+id/textView4"
+            android:layout_toEndOf="@+id/numberOfDecksText"
             android:text="@{viewModel.numberOfDecks}"/>
 
         <android.support.v7.widget.RecyclerView
@@ -29,13 +29,13 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/NumDecks"
+            android:layout_below="@+id/numDecks"
             android:descendantFocusability="beforeDescendants"
-            android:layout_above="@+id/ReshuffleButton"
+            android:layout_above="@+id/reshuffleButton"
             tools:listitem="@layout/card_row"/>
 
         <TextView
-            android:id="@+id/NumberOfRemainingCards"
+            android:id="@+id/numberOfRemainingCards"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -43,16 +43,16 @@
             android:text="@{viewModel.mCardList.getRemaining}"/>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/remainingCardText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remaining"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/NumberOfRemainingCards"
+            android:layout_toStartOf="@+id/numberOfRemainingCards"
             android:layout_marginEnd="15dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/numberOfDecksText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@android:id/list"
@@ -60,22 +60,22 @@
             android:text="@string/decks" />
 
         <Button
-            android:id="@+id/ReshuffleButton"
+            android:id="@+id/reshuffleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ReshuffleButton"
+            android:text="@string/reshuffleButton"
             android:onClick="@{viewModel.onClickedRedrawButton}"
             android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/NumDecks" />
+            android:layout_alignEnd="@+id/numDecks" />
 
         <TextView
-            android:id="@+id/Composition"
+            android:id="@+id/composition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.communicate}"
-            android:layout_alignBaseline="@+id/ReshuffleButton"
-            android:layout_alignBottom="@+id/ReshuffleButton"
-            android:layout_alignEnd="@+id/textView3" />
+            android:layout_alignBaseline="@+id/reshuffleButton"
+            android:layout_alignBottom="@+id/reshuffleButton"
+            android:layout_alignEnd="@+id/remainingCardText" />
 
         <ProgressBar
             android:id="@+id/progressBar"

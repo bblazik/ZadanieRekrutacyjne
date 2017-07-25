@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import bb.carddeck.R;
-import bb.carddeck.ViewModel.MainAppViewModel;
+import bb.carddeck.viewModel.MainAppViewModel;
 import bb.carddeck.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

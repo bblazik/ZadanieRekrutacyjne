@@ -9,8 +9,6 @@ import bb.carddeck.Injection.Component.DaggerApplicationComponent;
 import bb.carddeck.Injection.Module.ApplicationModule;
 import io.reactivex.Scheduler;
 import io.reactivex.schedulers.Schedulers;
-//import bb.carddeck.Injection.Component.DaggerApplicationComponent;
-
 
 public class CardDeckApplication extends Application{
 

@@ -1,4 +1,4 @@
-package bb.carddeck.Adapter;
+package bb.carddeck.view.Adapter;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;

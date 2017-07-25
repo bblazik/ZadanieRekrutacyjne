@@ -1,11 +1,11 @@
-package bb.carddeck.Activity;
+package bb.carddeck.view.Activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
-import bb.carddeck.Adapter.CardAdapter;
+import bb.carddeck.view.Adapter.CardAdapter;
 import bb.carddeck.R;
 import bb.carddeck.ViewModel.CardViewModel;
 import bb.carddeck.databinding.DeckDashboardBinding;

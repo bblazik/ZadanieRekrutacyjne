@@ -1,15 +1,12 @@
-package bb.carddeck.Activity;
+package bb.carddeck.view.Activity;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import bb.carddeck.R;
 import bb.carddeck.ViewModel.MainAppViewModel;
 import bb.carddeck.databinding.ActivityMainBinding;
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding mainActivityBinding;

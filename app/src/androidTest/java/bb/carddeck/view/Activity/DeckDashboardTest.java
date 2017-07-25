@@ -1,11 +1,9 @@
-package bb.carddeck.Activity;
+package bb.carddeck.view.Activity;
 
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Rule;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by barte_000 on 13.07.2017.

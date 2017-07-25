@@ -1,4 +1,4 @@
-package bb.carddeck.Activity;
+package bb.carddeck.view.Activity;
 import org.junit.Test;
 
 

@@ -3,7 +3,7 @@ package bb.carddeck.Injection.Module;
 import android.app.Application;
 
 import javax.inject.Singleton;
-import bb.carddeck.API.DataManager;
+import bb.carddeck.data.DataManager;
 import dagger.Module;
 import dagger.Provides;
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.NumberPicker;
 
-import bb.carddeck.Activity.DeckDashboard;
+import bb.carddeck.view.Activity.DeckDashboard;
 
 public class MainAppViewModel extends BaseObservable{
 

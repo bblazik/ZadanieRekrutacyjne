@@ -1,12 +1,11 @@
 package bb.carddeck.Injection.Component;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 
-import bb.carddeck.API.DataManager;
-import bb.carddeck.Activity.DeckDashboard;
+import bb.carddeck.data.DataManager;
+import bb.carddeck.view.Activity.DeckDashboard;
 import bb.carddeck.Injection.Module.ApplicationModule;
 import dagger.Component;
 

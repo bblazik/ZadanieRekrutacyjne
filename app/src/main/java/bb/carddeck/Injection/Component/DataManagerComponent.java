@@ -1,7 +1,7 @@
 package bb.carddeck.Injection.Component;
 
 
-import bb.carddeck.API.DataManager;
+import bb.carddeck.data.DataManager;
 import bb.carddeck.Injection.Module.DataManagerModule;
 import bb.carddeck.Injection.Scope.PerDataManager;
 import dagger.Component;

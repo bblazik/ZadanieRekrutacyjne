@@ -1,4 +1,4 @@
-package bb.carddeck.API;
+package bb.carddeck.data;
 
 
 import com.google.gson.Gson;

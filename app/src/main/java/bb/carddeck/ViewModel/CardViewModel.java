@@ -1,20 +1,16 @@
 package bb.carddeck.ViewModel;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
-import android.databinding.ObservableInt;
 import android.view.View;
 import android.widget.Toast;
 
-import bb.carddeck.API.DataManager;
-import bb.carddeck.Adapter.CardAdapter;
+import bb.carddeck.data.DataManager;
+import bb.carddeck.view.Adapter.CardAdapter;
 import bb.carddeck.CardDeckApplication;
 import bb.carddeck.Logic.DeckComposition;
 import bb.carddeck.R;
-import bb.carddeck.model.Card;
 import bb.carddeck.model.CardList;
 import bb.carddeck.model.Deck;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,20 +18,18 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
 
-import java.util.List;
-
 
 public class CardViewModel extends BaseObservable{
     private Context context;
+
     public CardList mCardList = new CardList();
     public ObservableField<Boolean> progressBarVisible = new ObservableField<>();
     public final ObservableField<Integer> numberOfDecks = new ObservableField();
+    private final int numberOfCards = 5;
 
     private DataManager mDataManager;
     private CardAdapter mCardAdapter;
     private CompositeDisposable mCompositeDisposable;
-    private final int numberOfCards = 5;
-
 
     public CardViewModel(Context context, CardAdapter cardAdapter, Integer numberOfDecks) {
         this.context = context;
@@ -65,7 +59,6 @@ public class CardViewModel extends BaseObservable{
                 .subscribeWith(new DisposableObserver<CardList>() {
                     @Override
                     public void onNext(@NonNull CardList cardList) {
-
                         mCardList = cardList;
                         mCardAdapter.setCardList(cardList.cardList); //TODO Check if there is a better way
                         notifyChange();

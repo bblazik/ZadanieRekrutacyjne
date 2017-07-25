@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import bb.carddeck.Adapter.CardAdapter;
 import bb.carddeck.R;
 import bb.carddeck.ViewModel.CardViewModel;
 import bb.carddeck.databinding.DeckDashboardBinding;
-import bb.carddeck.model.Card;
 
 
 public class DeckDashboard extends AppCompatActivity {

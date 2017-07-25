@@ -1,43 +1,29 @@
 package bb.carddeck.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.NumberPicker;
 
 import bb.carddeck.R;
-import butterknife.BindView;
+import bb.carddeck.ViewModel.MainAppViewModel;
+import bb.carddeck.databinding.ActivityMainBinding;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.numberPicker2)
-    NumberPicker numberPicker;
-    @BindView(R.id.PickNumber)
-    Button pickNumber;
+    ActivityMainBinding mainActivityBinding;
+    MainAppViewModel mainAppViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        initDataBinding();
+    }
 
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(5);
-        numberPicker.setWrapSelectorWheel(true);
-
-        pickNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), DeckDashboard.class);
-                intent.putExtra("numberOfDecks", numberPicker.getValue());
-                startActivity(intent);
-            }
-        });
+    public void initDataBinding(){
+        mainActivityBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mainAppViewModel = new MainAppViewModel(this);
+        mainActivityBinding.setViewModel(mainAppViewModel);
     }
 }

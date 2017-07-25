@@ -45,9 +45,9 @@ public class Composition {
         int figures = 0;
 
         for (Card c: ls) {
-            if(        c.getCode().charAt(0) == 'J'
-                    || c.getCode().charAt(0) == 'Q'
-                    || c.getCode().charAt(0) == 'K')
+            if(        c.code.charAt(0) == 'J'
+                    || c.code.charAt(0) == 'Q'
+                    || c.code.charAt(0) == 'K')
             {
                 figures++;
                 if(figures >= 3)
@@ -69,19 +69,19 @@ public class Composition {
     // \/Those methods can be implemented in Card class\/
 
     public static int GetCardRank(Card c){
-        switch (c.getCode().charAt(0)){
+        switch (c.code.charAt(0)){
             case 'A': return 1;
             case '0': return 10;
             case 'J': return 11;
             case 'Q': return 12;
             case 'K': return 13;
             default:
-                return Character.getNumericValue(c.getCode().charAt(0));
+                return Character.getNumericValue(c.code.charAt(0));
         }
     }
 
     public static int GetCardColor(Card c){
-        switch (c.getCode().charAt(1)){
+        switch (c.code.charAt(1)){
             case 'H': return 0;
             case 'S': return 1;
             case 'C': return 2;

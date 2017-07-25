@@ -33,27 +33,6 @@ public class CardList extends BaseObservable{
         return deck_id;
     }
 
-    public void setDeck_id(String deck_id) {
-        this.deck_id = deck_id;
-    }
-
-    public List<Card> getCardList() {
-        return cardList;
-    }
-
-    @Bindable
-    public void setCardList(List<Card> cardList) {
-        this.cardList = cardList;
-        notifyPropertyChanged(BR.cardList);
-    }
-
-    public Boolean getSuccess() {
-        return success;
-    }
-
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
     @Bindable
     public String getRemaining() {
         return remaining.toString();

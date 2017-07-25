@@ -41,7 +41,7 @@ public class CardViewModel extends BaseObservable{
     }
 
     public List<Card> getCardList(){
-        return mCardList.getCardList();
+        return mCardList.cardList;
     }
 
     public CardViewModel(Context context, CardAdapter cardAdapter) {
@@ -74,7 +74,7 @@ public class CardViewModel extends BaseObservable{
                     public void onNext(@NonNull CardList cardList) {
 
                         mCardList = cardList;
-                        mCardAdapter.setCardList(cardList.getCardList()); //TODO Check if there is a better way
+                        mCardAdapter.setCardList(cardList.cardList); //TODO Check if there is a better way
                         notifyChange();
                     }
 
@@ -97,7 +97,7 @@ public class CardViewModel extends BaseObservable{
                 .subscribeWith(new DisposableObserver<Deck>() {
                     @Override
                     public void onNext(@NonNull Deck deck) {
-                        getCardList(deck.getDeck_id(), numberOfCards);
+                        getCardList(deck.deck_id, numberOfCards);
                         Toast.makeText(context, "Cards get shuffled ", Toast.LENGTH_SHORT).show();
                     }
 
@@ -114,7 +114,7 @@ public class CardViewModel extends BaseObservable{
     }
 
     public Boolean shuffleIfRemainingEqualsZero(CardList cardList){
-        if(cardList.getRemaining() == "0"){ // eq by value
+        if(cardList.remaining == 0){
             getShuffle(cardList.getDeck_id());
             return true;
         }else

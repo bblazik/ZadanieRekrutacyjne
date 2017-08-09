@@ -1,6 +1,7 @@
 package bb.carddeck.viewModel;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableField;
 import android.view.View;
@@ -20,7 +21,6 @@ import io.reactivex.observers.DisposableObserver;
 
 
 public class CardViewModel extends BaseObservable{
-    private Context context;
 
     public CardList mCardList = new CardList();
     public ObservableField<Boolean> progressBarVisible = new ObservableField<>();
@@ -31,10 +31,9 @@ public class CardViewModel extends BaseObservable{
     private CardAdapter mCardAdapter;
     private CompositeDisposable mCompositeDisposable;
 
-    public CardViewModel(Context context, CardAdapter cardAdapter, Integer numberOfDecks) {
-        this.context = context;
+    public CardViewModel(CardAdapter cardAdapter, Integer numberOfDecks) {
         mCompositeDisposable = new CompositeDisposable();
-        mDataManager = CardDeckApplication.get(this.context).getComponent().dataManager();
+        mDataManager = CardDeckApplication.get().getComponent().dataManager();
         mCardAdapter = cardAdapter;
         this.numberOfDecks.set(numberOfDecks);
         getCardList("new", numberOfCards);
@@ -66,7 +65,7 @@ public class CardViewModel extends BaseObservable{
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, "There was a problem to get cards", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CardDeckApplication.get(), "There was a problem to get cards", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -84,12 +83,12 @@ public class CardViewModel extends BaseObservable{
                     @Override
                     public void onNext(@NonNull Deck deck) {
                         getCardList(deck.deck_id, numberOfCards);
-                        Toast.makeText(context, "Cards get shuffled ", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Cards get shuffled ", Toast.LENGTH_SHORT).show(); //todo to print class
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Toast.makeText(context, "Error while shuffle " + e.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Error while shuffle " + e.toString(), Toast.LENGTH_SHORT).show(); //todo to print class
                     }
 
                     @Override
@@ -107,24 +106,26 @@ public class CardViewModel extends BaseObservable{
             return false;
     }
 
+
     public String communicate(){
         StringBuilder sb = new StringBuilder();
         DeckComposition deckComposition = new DeckComposition(mCardList.cardList);
 
         if(deckComposition.containsColor()){
-            sb.append(context.getString(R.string.color));
+            sb.append(CardDeckApplication.get().getString(R.string.color));
         }
+
         if (deckComposition.containsStairs()) {
-            sb.append(context.getString(R.string.stairs));
+            sb.append(CardDeckApplication.get().getString(R.string.stairs));
         }
         if(deckComposition.containsThreeFigures()){
-            sb.append(context.getString(R.string.figures));
+            sb.append(CardDeckApplication.get().getString(R.string.figures));
         }
         if(deckComposition.containsTwins()){
-            sb.append(context.getString(R.string.twins));
+            sb.append(CardDeckApplication.get().getString(R.string.twins));
         }
         if(sb.toString().equals(""))
-            return context.getString(R.string.composition);
+            return CardDeckApplication.get().getString(R.string.composition);
 
         return sb.toString();
     }

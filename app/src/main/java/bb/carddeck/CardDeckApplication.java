@@ -14,15 +14,18 @@ public class CardDeckApplication extends Application{
 
     ApplicationComponent mApplicationComponent;
     private Scheduler scheduler;
+    public static Context context;
+
     @Override
     public void onCreate() {
         super.onCreate();
         mApplicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+        context = getApplicationContext();
     }
 
-    public static CardDeckApplication get(Context context) {
+    public static CardDeckApplication get() {
         return (CardDeckApplication) context.getApplicationContext();
     }
 

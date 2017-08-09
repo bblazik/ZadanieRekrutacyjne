@@ -31,9 +31,9 @@ public class DataManager {
         mSubscribeScheduler = subscribeScheduler;
     }
 
-    protected void injectDependencies(Context context){
+    protected void injectDependencies(Context context){ //todo remove param
         DaggerDataManagerComponent.builder()
-                .applicationComponent(CardDeckApplication.get(context).getComponent())
+                .applicationComponent(CardDeckApplication.get().getComponent())
                 .dataManagerModule(new DataManagerModule())
                 .build()
                 .inject(this);

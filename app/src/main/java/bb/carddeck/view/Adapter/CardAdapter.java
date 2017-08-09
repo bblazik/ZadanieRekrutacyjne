@@ -50,7 +50,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         void bindCard(Card card) {
             if (mCardRowBinding.getViewModel() == null) {
                 mCardRowBinding.setViewModel(
-                        new CardItemViewModel(card, itemView.getContext()));
+                        new CardItemViewModel(card));
             } else {
                 mCardRowBinding.getViewModel().setCard(card);
             }

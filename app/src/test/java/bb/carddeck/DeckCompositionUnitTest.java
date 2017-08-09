@@ -50,7 +50,7 @@ public class DeckCompositionUnitTest {
     }
 
     @Test
-    public void NotContainsColor() throws Exception {
+    public void NotContainsColorIfOnlyTwoCardsOfSameColor() throws Exception {
         //COLOR, TWINS
         List<Card> c = new ArrayList<>();
         c.add(new Card("8S"));

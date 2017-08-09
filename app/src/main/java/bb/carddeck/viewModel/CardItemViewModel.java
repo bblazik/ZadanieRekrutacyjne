@@ -14,9 +14,8 @@ public class CardItemViewModel extends BaseObservable {
     private Card mCard;
     private Context mContext;
 
-    public CardItemViewModel(Card card, Context context){
+    public CardItemViewModel(Card card){
         mCard = card;
-        mContext = context;
     }
 
     public String getCode(){

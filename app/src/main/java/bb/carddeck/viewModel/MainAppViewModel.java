@@ -8,18 +8,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.NumberPicker;
 
+import bb.carddeck.CardDeckApplication;
 import bb.carddeck.view.Activity.DeckDashboard;
 
 public class MainAppViewModel extends BaseObservable{
 
-    Context mContext;
     public final Integer min = 1;
     public final Integer max = 5;
     public static Integer pickerValue = 1;
 
-    public MainAppViewModel(Context context){
-        mContext = context;
-    }
 
     @BindingAdapter({"min", "max"})
     public static void setOptions(NumberPicker numberPicker, Integer min, Integer max){
@@ -38,9 +35,9 @@ public class MainAppViewModel extends BaseObservable{
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(mContext, DeckDashboard.class);
+            Intent intent = new Intent(CardDeckApplication.get(), DeckDashboard.class);
             intent.putExtra("numberOfDecks", pickerValue);
-            mContext.startActivity(intent);
+            CardDeckApplication.get().startActivity(intent);
         }
     };
 
